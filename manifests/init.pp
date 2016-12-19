@@ -88,14 +88,11 @@ class gradle(
   }
 
   archive { "gradle-${version_real}-all.zip":
-    ensure     => present,
-    url        => $url_real,
-    checksum   => false,
-    src_target => '/var/tmp',
-    target     => '/opt',
-    root_dir   => "gradle-${version_real}",
-    extension  => 'zip',
-    timeout    => $timeout,
+    ensure          => present,
+    source          => $url_real,
+    checksum_verify => false,
+    extract         => true,
+    extract_path    => "/opt/gradle-${version_real}"
   }
 
   file { $target_real:
