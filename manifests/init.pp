@@ -87,18 +87,17 @@ class gradle(
     group => 'root',
   }
 
-  archive { "gradle-${version_real}-all.zip":
-    ensure          => present,
-    source          => $url_real,
-    checksum_verify => false,
-    extract         => true,
-    extract_path    => "/opt/gradle-${version_real}"
+  archive { "/opt/gradle-${version_real}-all.zip":
+    extract      => true,
+    extract_path => "/opt",
+    source       => $url_real,
+    creates      => "/opt/gradle-${version_real}"
   }
 
   file { $target_real:
     ensure  => link,
     target  => "/opt/gradle-${version_real}",
-    require => Archive["gradle-${version_real}-all.zip"],
+    require => Archive["/opt/gradle-${version_real}-all.zip"],
   }
 
   file { '/etc/profile.d/gradle.sh':
